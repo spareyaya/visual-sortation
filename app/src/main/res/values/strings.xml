@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">可视化排序</string>
+
+    <string name="algorithm">选择一种算法</string>
+    <string-array name="sorts">
+        <item>冒泡</item>
+        <item>插入</item>
+        <item>快速</item>
+        <item>堆</item>
+        <item>希尔</item>
+        <item>归并</item>
+        <item>选择</item>
+    </string-array>
+
+    <string name="change">新数据</string>
+    <string name="reset">重置</string>
+    <string name="sort">排序</string>
+</resources>
