@@ -31,6 +31,16 @@
             android:prompt="@string/algorithm"
             />
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:entries="@array/numbers"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:prompt="@string/num"
+            android:spinnerMode="dialog" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

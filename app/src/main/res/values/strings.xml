@@ -12,6 +12,13 @@
         <item>选择</item>
     </string-array>
 
+    <string name="num">选择数据的数量</string>
+    <string-array name="numbers">
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+    </string-array>
     <string name="change">新数据</string>
     <string name="reset">重置</string>
     <string name="sort">排序</string>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "MainActivity";
 
     private final int BUBBLE = 0;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int MERGE = 5;
     private final int SELECTION = 6;
 
-    private final int SIZE = 100;
+    private int size = 100;
     private final int MAX = 300;
 
     private int[] originalData;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private DataView dataView;
     private AppCompatSpinner spinner;
+    private AppCompatSpinner numSpinner;
     private Button changeBtn;
     private Button resetBtn;
     private Button sortBtn;
@@ -58,27 +60,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         dataView = findViewById(R.id.data_view);
         spinner = findViewById(R.id.spinner);
+        numSpinner = findViewById(R.id.spinner_num);
         changeBtn = findViewById(R.id.change);
         resetBtn = findViewById(R.id.reset);
         sortBtn = findViewById(R.id.sort);
 
-        spinner.setOnItemSelectedListener(this);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sortAlgorithm = position;
+                reset();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        numSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] numberArray = getResources().getStringArray(R.array.numbers);
+                size = Integer.valueOf(numberArray[position]);
+                change();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         changeBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
         sortBtn.setOnClickListener(this);
 
         init();
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        sortAlgorithm = position;
-        reset();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
@@ -98,11 +114,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void init() {
-        originalData = new int[SIZE];
-        currentData = new int[SIZE];
+        numSpinner.setSelection(1);
+        originalData = new int[size];
+        currentData = new int[size];
         dataFrames = new ArrayList<>();
         random = new Random();
-        for (int i = 0; i < SIZE; i++) {
+        for (int i = 0; i < size; i++) {
             originalData[i] = random.nextInt(MAX) + 1;
             currentData[i] = originalData[i];
         }
@@ -116,10 +133,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(this, "正在排序...", Toast.LENGTH_SHORT).show();
             return;
         }
-        for (int i = 0; i < SIZE; i++) {
+        originalData = new int[size];
+        for (int i = 0; i < size; i++) {
             originalData[i] = random.nextInt(MAX) + 1;
         }
-        currentData = Arrays.copyOf(originalData, SIZE);
+        currentData = Arrays.copyOf(originalData, size);
         dataFrames.clear();
         dataFrames.add(currentData);
         dataView.setDataFrames(dataFrames);
@@ -130,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(this, "正在排序...", Toast.LENGTH_SHORT).show();
             return;
         }
-        currentData = Arrays.copyOf(originalData, SIZE);
+        currentData = Arrays.copyOf(originalData, size);
         dataFrames.clear();
         dataFrames.add(currentData);
         dataView.setDataFrames(dataFrames);
